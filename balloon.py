@@ -118,9 +118,16 @@ if __name__ == '__main__':
 
 		print('x:'+str(i[0]).rjust(3),'y:'+str(i[1]).rjust(3),'size:'+str(i[2]).rjust(3),'-'*i[2])
 
-		theta = math.atan((i[0]/320.0)-1)
-		x_ = math.cos(theta)*20/i[2]
-		y_ = math.sin(theta)*20/i[2]
+		#Calculate measurament variables
+		u= (i[0]/320.0)-1
+		pho = 20.0/i[2]
+
+		
+		x_ = pho*1.0/math.sqrt(1+u*u)
+		y_ = pho*u/math.sqrt(1+u*u)
+
+
+		print(x_,y_)
 		plt.plot(x_, y_, 'ro')
 
            	plt.axis([0,2,-1,1])
