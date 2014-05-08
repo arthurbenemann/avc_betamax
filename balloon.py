@@ -24,17 +24,30 @@ if __name__ == '__main__':
 
     # default colour filters (this is for a yellow tennis ball)
     h_low = 0
-    h_high = 5
-    s_low = 60
-    s_high = 255
-    v_low = 130
+    h_high = 10
+    s_low = 120
+    s_high = 250
+    v_low = 170
     v_high = 255
+
+    # call back for trackbar movements
+    def empty_callback(x):
+	pass
+
+    # create trackbars for color change
+    cv2.namedWindow('Colour Filters')
+    cv2.createTrackbar('Hue min','Colour Filters',h_low,255,empty_callback)
+    cv2.createTrackbar('Hue max','Colour Filters',h_high,255,empty_callback)
+    cv2.createTrackbar('Sat min','Colour Filters',s_low,255,empty_callback)
+    cv2.createTrackbar('Sat max','Colour Filters',s_high,255,empty_callback)
+    cv2.createTrackbar('Bgt min','Colour Filters',v_low,255,empty_callback)
+    cv2.createTrackbar('Bgt max','Colour Filters',v_high,255,empty_callback)
 
 
 
     #Capture a single frame just to show the result window first
     flag, frame = cam.read()
-#    cv2.imshow('result',frame);
+    cv2.imshow('result',frame);
 
     #Display the plot
     fig=plt.figure()
@@ -46,14 +59,21 @@ if __name__ == '__main__':
     while True:
 	# Read frame
         flag, frame = cam.read()
-#        cv2.imshow('camera', frame)
-#        small = cv2.pyrDown(frame)
+        cv2.imshow('camera', frame)
+        small = cv2.pyrDown(frame)
 	small = frame
 
 	#Process image
         hsv = cv2.cvtColor(small, cv2.COLOR_BGR2HSV)
 
 
+	# get latest trackbar positions
+	h_low = cv2.getTrackbarPos('Hue min','Colour Filters')
+	h_high = cv2.getTrackbarPos('Hue max','Colour Filters')
+	s_low = cv2.getTrackbarPos('Sat min','Colour Filters')
+	s_high = cv2.getTrackbarPos('Sat max','Colour Filters')
+	v_low = cv2.getTrackbarPos('Bgt min','Colour Filters')
+	v_high = cv2.getTrackbarPos('Bgt max','Colour Filters')
 
         # use trackbar positions to filter image
         colour_low = np.array([h_low,s_low,v_low])
@@ -61,7 +81,7 @@ if __name__ == '__main__':
 
         # Threshold the HSV image
         mask = cv2.inRange(hsv, colour_low, colour_high)
-#	cv2.imshow('threshold',mask)
+	cv2.imshow('threshold',mask)
 
         # Erode
         erode_kernel = np.ones((5,5),np.uint8);
@@ -77,7 +97,7 @@ if __name__ == '__main__':
 	#Transform to Gray scale
         img = cv2.cvtColor(res, cv2.COLOR_BGR2GRAY)
 
-#	cv2.imshow('mask',res)
+	cv2.imshow('mask',res)
 
 	#Blur and Hough
 	img = cv2.medianBlur(img, 5)
@@ -109,7 +129,7 @@ if __name__ == '__main__':
 		break
 	else:
 		print('-')
-#	cv2.imshow('result',cimg)
+	cv2.imshow('result',cimg)
 
 
 	
