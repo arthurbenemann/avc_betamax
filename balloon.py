@@ -9,20 +9,32 @@ import cv2
 import cv2.cv as cv
 
 # local modules
-import video
 import math
 import matplotlib.pyplot as plt
 from matplotlib.patches import Ellipse
 
-from pykalman import KalmanFilter
 
-if __name__ == '__main__':
+# define image resolution
+img_width = 640
+img_height = 480
 
-    try:
-        fn = sys.argv[1]
-    except:
-        fn = 0
-    cam = video.create_capture(fn, fallback='synth:bg=../cpp/baboon.jpg:class=chess:noise=0.05')
+def get_camera():
+    # setup video capture
+    video_capture = cv2.VideoCapture(0)
+    video_capture.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH,img_width)
+    video_capture.set(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT,img_height)
+
+    # check we can connect to camera
+    if not video_capture.isOpened():
+        print "failed to open camera, exiting!"
+        sys.exit(0)
+
+    return video_capture
+
+
+def main():
+        
+    video_capture = get_camera()
 
 
     # default colour filters (this is for a yellow tennis ball)
@@ -47,11 +59,6 @@ if __name__ == '__main__':
     cv2.createTrackbar('Bgt max','Colour Filters',v_high,255,empty_callback)
 
 
-
-    #Capture a single frame just to show the result window first
-    flag, frame = cam.read()
-#    cv2.imshow('result',frame);
-
     #Display the plot
     fig=plt.figure()
     plt.show(block=False)
@@ -70,7 +77,7 @@ if __name__ == '__main__':
 
     while True:
 	# Read frame
-        flag, frame = cam.read()
+        flag, frame =  video_capture.read()
 #        cv2.imshow('camera', frame)
         small = cv2.pyrDown(frame)
 	small = frame
@@ -179,3 +186,7 @@ if __name__ == '__main__':
         if ch == 27:
             break
     cv2.destroyAllWindows()
+    
+    
+if __name__ == "__main__":
+    main()
