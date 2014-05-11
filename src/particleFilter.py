@@ -2,7 +2,7 @@ import numpy
 
 SYSTEM_NOISE = 0.02
 MEASURAMENT_NOISE = 0.01
-PARTICLE_NUMBER = 1000
+PARTICLE_NUMBER = 100
 
 class ParticleFilter():
     pos = numpy.random.random_sample((PARTICLE_NUMBER,3))
