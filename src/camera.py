@@ -18,8 +18,8 @@ class Camera:
         size = circle[2]
         
         # Calculate measurament variables
-        u = 2*(xPixel / img_width) - 1
-        v = 2*(yPixel / img_height) - 1
+        u = 2 * (xPixel / img_width) - 1
+        v = 2 * (yPixel / img_height) - 1
         pho = 20.0 / size        
         z = [pho * 1.0 / math.sqrt(1 + u * u), pho * u / math.sqrt(1 + u * u)]
         return z

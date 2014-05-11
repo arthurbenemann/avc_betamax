@@ -4,10 +4,10 @@ from timming import timeit
 
 @timeit
 def detectBallonInFrame(frame, colour_low, colour_high):
-    #small = cv2.pyrDown(frame)
+    # small = cv2.pyrDown(frame)
     
     # Process image
-    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV) # Threshold the HSV image
+    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)  # Threshold the HSV image
     mask = cv2.inRange(hsv, colour_low, colour_high)
 #   cv2.imshow('threshold', mask)
 
@@ -41,7 +41,7 @@ def drawCirclesInFrame(circles, frame):
             cv2.circle(frame, (i[0], i[1]), i[2], (0, 255, 0), 2)
             # draw the center of the circle
             cv2.circle(frame, (i[0], i[1]), 2, (0, 0, 255), 3)
-            break # Draw just the first circle
+            break  # Draw just the first circle
     return frame
 
 
