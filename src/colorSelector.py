@@ -33,5 +33,5 @@ class ColorSelector:
         cv2.createTrackbar('Hue max', 'Color Filters', self.h_high, 255, empty_callback)
         cv2.createTrackbar('Sat min', 'Color Filters', self.s_low, 255, empty_callback)
         cv2.createTrackbar('Sat max', 'Color Filters', self.s_high, 255, empty_callback)
-        cv2.createTrackbar('Bgt min', 'Color Filters', self.v_low, 255, empty_callback)
-        cv2.createTrackbar('Bgt max', 'Color Filters', self.v_high, 255, empty_callback)    
+        cv2.createTrackbar('Val min', 'Color Filters', self.v_low, 255, empty_callback)
+        cv2.createTrackbar('Val max', 'Color Filters', self.v_high, 255, empty_callback)    
