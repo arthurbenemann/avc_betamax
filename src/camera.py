@@ -1,5 +1,6 @@
 import cv2
 import math
+import time
 
 # define image resolution
 img_width = 640
@@ -8,6 +9,8 @@ img_height = 480
 
 class Camera:
     video_capture = cv2.VideoCapture(0)
+    start_time = time.time()
+    fps = 0
 
     def transformCameraToWorld(self, circle):
         xPixel = circle[0]
@@ -23,6 +26,17 @@ class Camera:
     
     def getFrame(self):
         _, frame = self.video_capture.read()
+        
+        self.fps += 1
+ 
+        if self.fps % 10 == 0:
+            currtime = time.time()
+            numsecs = currtime - self.start_time
+            self.start_time = currtime
+            self.fps = self.fps / numsecs
+            print "average FPS:", self.fps
+            self.fps = 0;
+            
         return frame
 
     

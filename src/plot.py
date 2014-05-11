@@ -24,7 +24,6 @@ class Plot:
         plt.clf()
         plt.hold(True)
         estimate = particleFilter.mean()
-        print(estimate)
         plt.plot(estimate[0], estimate[1], 'bo')
         plt.scatter(particleFilter.pos[:,0], particleFilter.pos[:,1],s=1)
         if z is not None:
