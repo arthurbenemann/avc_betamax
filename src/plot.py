@@ -1,6 +1,6 @@
-import matplotlib.pyplot as plt
 from matplotlib.patches import Ellipse
-from matplotlib import mpl
+import matplotlib.pyplot as plt
+
 
 class Plot:
     def newData(self, z, x, P):        
@@ -23,7 +23,10 @@ class Plot:
         plt.figure("particleFilter");
         plt.clf()
         plt.hold(True)
-        plt.scatter(particleFilter.pos[:,0], particleFilter.pos[:,1], c=particleFilter.weights)
+        estimate = particleFilter.mean()
+        print(estimate)
+        plt.plot(estimate[0], estimate[1], 'bo')
+        plt.scatter(particleFilter.pos[:,0], particleFilter.pos[:,1],s=1)
         if z is not None:
             plt.plot(z[0], z[1], 'ro')
         plt.axis([0, 2, -1, 1]) 

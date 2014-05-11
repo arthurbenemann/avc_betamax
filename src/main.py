@@ -45,14 +45,13 @@ def loop():
     
     #Graphics
     cv2.imshow('result', frame)
-        
+       
     if not (circles is None):        
         plot.newData(z, kalman.x, kalman.P)
         plot.newParticleFilterData(z,particleFilter)
     else:
         plot.newData(None, kalman.x, kalman.P)
-        plot.newParticleFilterData(None,particleFilter)
-        
+        plot.newParticleFilterData(None,particleFilter)    
 
 if __name__ == "__main__":
     main()
