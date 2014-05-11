@@ -4,11 +4,13 @@ from colorSelector import ColorSelector
 from camera import Camera
 from plot import Plot
 from kalman import Kalman
+from particleFilter import ParticleFilter
 
 colorSel = ColorSelector()
 camera = Camera()
 plot = Plot()
 kalman = Kalman()
+particleFilter = ParticleFilter()
 
 def main():
     colorSel.createTrackBars()
@@ -36,16 +38,21 @@ def loop():
     if not (circles is None):
         z = camera.transformCameraToWorld(circles[0, 0, :])
         kalman.update(z)
+        particleFilter.update(z)
     else:
         kalman.updateWithoutMeasurament()
+        particleFilter.updateWithoutMeasurament()
     
     #Graphics
     cv2.imshow('result', frame)
         
     if not (circles is None):        
         plot.newData(z, kalman.x, kalman.P)
+        plot.newParticleFilterData(z,particleFilter)
     else:
         plot.newData(None, kalman.x, kalman.P)
+        plot.newParticleFilterData(None,particleFilter)
+        
 
 if __name__ == "__main__":
     main()

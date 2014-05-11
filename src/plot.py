@@ -1,17 +1,14 @@
 import matplotlib.pyplot as plt
 from matplotlib.patches import Ellipse
+from matplotlib import mpl
 
 class Plot:
-
-    # Display the plot
-    fig = plt.figure()
-    plt.show(block=False)
-    plt.hold(False)
-
-    def newData(self, z, x, P):
-        if (z is None):
-            plt.plot(x[0], x[1], 'bo')
-        else:
+    def newData(self, z, x, P):        
+        plt.figure("Kalman")
+        plt.clf()
+        plt.hold(True)
+        plt.plot(x[0], x[1], 'bo')
+        if (z is not None):
             plt.plot(z[0], z[1], 'ro', x[0], x[1], 'bo')
         
         if (P.max() <= 1):
@@ -19,3 +16,17 @@ class Plot:
             
         plt.axis([0, 2, -1, 1])            
         plt.draw()
+        plt.show(block=False)
+
+    
+    def newParticleFilterData(self, z, particleFilter):
+        plt.figure("particleFilter");
+        plt.clf()
+        plt.hold(True)
+        plt.scatter(particleFilter.pos[:,0], particleFilter.pos[:,1], c=particleFilter.weights)
+        if z is not None:
+            plt.plot(z[0], z[1], 'ro')
+        plt.axis([0, 2, -1, 1]) 
+        plt.show(block=False) 
+    
+    
