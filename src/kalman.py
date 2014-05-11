@@ -14,10 +14,11 @@ class Kalman:
         self.xp = self.A.dot(self.x)
         self.Pp = self.A.dot(self.P.dot(self.A.T)) + self.Q
         
-    def updateWithoutMeasurament(self):
-        self.P = self.Pp
-        
     def update(self, z):
-        self.K = self.Pp.dot(self.H.T.dot(np.linalg.inv(self.H.dot(self.Pp.dot(self.H.T)) + self.R)))        
-        self.x = self.xp + self.K.dot(z - self.H.dot(self.xp))
-        self.P = self.Pp - self.K.dot(self.H.dot(self.Pp))
+        self.predict()
+        if z is None:
+            self.P = self.Pp
+        else:
+            self.K = self.Pp.dot(self.H.T.dot(np.linalg.inv(self.H.dot(self.Pp.dot(self.H.T)) + self.R)))        
+            self.x = self.xp + self.K.dot(z - self.H.dot(self.xp))
+            self.P = self.Pp - self.K.dot(self.H.dot(self.Pp))

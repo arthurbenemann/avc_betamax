@@ -11,7 +11,7 @@ class ColorSelector:
     h_high = 10
     s_low = 120
     s_high = 255
-    v_low = 115
+    v_low = 80
     v_high = 255
 
     def getColorFilter(self):

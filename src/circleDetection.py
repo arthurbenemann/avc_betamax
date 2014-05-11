@@ -1,6 +1,8 @@
 import cv2
 import numpy
+from timming import timeit
 
+@timeit
 def detectBallonInFrame(frame, colour_low, colour_high):
     #small = cv2.pyrDown(frame)
     
@@ -41,3 +43,12 @@ def drawCirclesInFrame(circles, frame):
             cv2.circle(frame, (i[0], i[1]), 2, (0, 0, 255), 3)
             break # Draw just the first circle
     return frame
+
+
+def getWorldCoordForFirstCircle(circles, camera):
+    if not (circles is None):
+        z = camera.transformCameraToWorld(circles[0, 0, :])
+    else:
+        z = None
+    return z
+
