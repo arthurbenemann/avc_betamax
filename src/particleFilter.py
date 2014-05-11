@@ -6,7 +6,7 @@ MEASURAMENT_NOISE = 0.01
 PARTICLE_NUMBER = 100
 
 class ParticleFilter():
-    pos = numpy.random.random_sample((PARTICLE_NUMBER,3))
+    pos = numpy.random.random_sample((PARTICLE_NUMBER,3))*10
     weights = numpy.ones(PARTICLE_NUMBER)/PARTICLE_NUMBER  
     
     @timeit
