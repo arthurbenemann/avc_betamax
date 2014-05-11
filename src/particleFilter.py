@@ -1,7 +1,8 @@
 import numpy
 
-SYSTEM_NOISE = 0.01
-PARTICLE_NUMBER = 100
+SYSTEM_NOISE = 0.02
+MEASURAMENT_NOISE = 0.01
+PARTICLE_NUMBER = 1000
 
 class ParticleFilter():
     pos = numpy.random.random_sample((PARTICLE_NUMBER,3))
@@ -20,7 +21,9 @@ class ParticleFilter():
 
     def reweight(self, z):
         for i in range(PARTICLE_NUMBER):
-            self.weights[i] = numpy.exp(-1*numpy.hypot(z[0]-self.pos[i,0], z[1]-self.pos[i,1]))
+            temp = numpy.hypot(z[0]-self.pos[i,0], z[1]-self.pos[i,1])
+            self.weights[i] =(1/numpy.sqrt(2*numpy.pi*MEASURAMENT_NOISE)) * numpy.exp(-numpy.power(temp,2)/(2*MEASURAMENT_NOISE))
+             
         self.weights = self.weights/self.weights.sum()
     
     def resample(self):
@@ -28,7 +31,7 @@ class ParticleFilter():
         posCopy = numpy.copy(self.pos)
         for i in range(PARTICLE_NUMBER):
             rand = numpy.random.rand()
-            sample = numpy.where(cumsum>rand)[0][0]
+            sample = numpy.where(cumsum>=rand)[0][0] #TODO find faster function
             self.pos[i,:] = posCopy[sample,:] 
             
     def mean(self):
