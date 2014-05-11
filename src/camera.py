@@ -4,7 +4,11 @@ import math
 class Camera:
     video_capture = cv2.VideoCapture(0)
 
-    def transformCameraToWorld(self, xPixel,yPixel,size):
+    def transformCameraToWorld(self, circle):
+        xPixel = circle[0]
+        yPixel = circle[1]
+        size = circle[2]
+        
         # Calculate measurament variables
         u = (xPixel / 320.0) - 1
         v = (yPixel / 240.0) - 1
