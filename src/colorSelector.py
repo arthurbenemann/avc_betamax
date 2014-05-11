@@ -10,8 +10,8 @@ class ColorSelector:
     h_low = 0
     h_high = 10
     s_low = 120
-    s_high = 250
-    v_low = 130
+    s_high = 255
+    v_low = 115
     v_high = 255
 
     def getColorFilter(self):
@@ -20,8 +20,8 @@ class ColorSelector:
         self.h_high = cv2.getTrackbarPos('Hue max', 'Color Filters')
         self.s_low = cv2.getTrackbarPos('Sat min', 'Color Filters')
         self.s_high = cv2.getTrackbarPos('Sat max', 'Color Filters')
-        self.v_low = cv2.getTrackbarPos('Bgt min', 'Color Filters')
-        self.v_high = cv2.getTrackbarPos('Bgt max', 'Color Filters')
+        self.v_low = cv2.getTrackbarPos('Val min', 'Color Filters')
+        self.v_high = cv2.getTrackbarPos('Val max', 'Color Filters')
 
         color_low = numpy.array([self.h_low, self.s_low, self.v_low])
         color_high = numpy.array([self.h_high, self.s_high, self.v_high])
