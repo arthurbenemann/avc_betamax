@@ -5,11 +5,6 @@ from camera import Camera
 from plot import Plot
 from kalman import Kalman
 
-
-# define image resolution
-img_width = 640
-img_height = 480
-
 colorSel = ColorSelector()
 camera = Camera()
 plot = Plot()

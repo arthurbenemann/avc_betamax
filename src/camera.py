@@ -1,6 +1,11 @@
 import cv2
 import math
 
+# define image resolution
+img_width = 640
+img_height = 480
+
+
 class Camera:
     video_capture = cv2.VideoCapture(0)
 
@@ -10,8 +15,8 @@ class Camera:
         size = circle[2]
         
         # Calculate measurament variables
-        u = (xPixel / 320.0) - 1
-        v = (yPixel / 240.0) - 1
+        u = 2*(xPixel / img_width) - 1
+        v = 2*(yPixel / img_height) - 1
         pho = 20.0 / size        
         z = [pho * 1.0 / math.sqrt(1 + u * u), pho * u / math.sqrt(1 + u * u)]
         return z
