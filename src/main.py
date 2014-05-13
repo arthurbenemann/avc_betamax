@@ -33,16 +33,16 @@ def loop():
         
     #Filters    
     kalman.update(z)
-    particleFilter.update(z)
+    #particleFilter.update(z)
     
     #Graphics
     circleDetection.drawCirclesInFrame(circles, frame)
-    #frame = cv2.resize(frame, (0,0), fx=0.25, fy=0.25) 
+    frame = cv2.resize(frame, (0,0), fx=0.25, fy=0.25) 
     cv2.imshow('result', frame)
                   
-    plot.newData(z, kalman)
+    #plot.newData(z, kalman)
     #plot.newParticleFilterData(z,particleFilter)    
-    
+    print(z)
 
 if __name__ == "__main__":
     main()

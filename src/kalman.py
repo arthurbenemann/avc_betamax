@@ -2,13 +2,13 @@
 import numpy as np
 
 class Kalman:
-    A = np.array([[1, 0], [0, 1]])  # Process model
-    H = np.array([[1, 0], [0, 1]])  # Measurament model
-    Q = np.eye(2) * 0.002  # Process covariance
-    R = np.array([[5, 0], [0, 1]])  # Measurament covariance
+    A = np.eye(3)  # Process model
+    H = np.eye(3)  # Measurament model
+    Q = np.eye(3) * 0.002  # Process covariance
+    R = np.array([[5,0,0],[0,5,0], [0,0,1]])  # Measurament covariance
     
-    x = np.array([0, 0])  # Initial pos
-    P = np.eye(2) * 100000000  # Initial Covariance
+    x = np.array([0, 0, 0])  # Initial pos
+    P = np.eye(3) * 100000000  # Initial Covariance
 
     def predict(self):
         self.xp = self.A.dot(self.x)

@@ -26,7 +26,7 @@ class Camera:
         u = 2 * (xPixel / img_width) - 1
         v = 2 * (yPixel / img_height) - 1
         pho = 20.0 / size        
-        z = [pho * 1.0 / math.sqrt(1 + u * u), pho * u / math.sqrt(1 + u * u)]
+        z = [pho * 1.0 / math.sqrt(1 + u * u), pho * 1.0 / math.sqrt(1 + v * v), pho * u / math.sqrt(1 + u * u)]
         return z
     
     def getFrame(self):
