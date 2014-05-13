@@ -16,7 +16,7 @@ class ParticleFilter():
         self.addNoise()
         if not z is None:
             self.reweight(z)
-            self.resample()
+            self.resample(z)
 
     @timeit
     def addNoise(self):
@@ -30,21 +30,30 @@ class ParticleFilter():
         temp = numpy.apply_along_axis(numpy.linalg.norm, 1, z - self.pos) # norm of the difference for all particles
         self.weights = self.mesuramentPDF.pdf(temp)
              
-        self.weights = self.weights / self.weights.sum()
+        weightsSum = self.weights.sum()
+        if weightsSum > 0:
+            self.weights = self.weights / weightsSum
     
     @timeit
-    def resample(self):
+    def resample(self,z):
         cumsum = numpy.cumsum(self.weights)
         posCopy = numpy.copy(self.pos)
         for i in range(PARTICLE_NUMBER):
             rand = numpy.random.rand()
-            sample = numpy.where(cumsum >= rand)[0][0]  # TODO find faster function, crashes sometimes (index out of bounds)
-            self.pos[i, :] = posCopy[sample, :] 
+            sample = findFirst(cumsum,rand)
+            if sample is None:
+                self.pos[i, :] = z   # if sample has zero probability resample at measurament point
+            else:
+                self.pos[i, :] = posCopy[sample, :] 
     @timeit            
     def mean(self):
         return numpy.mean(self.pos, axis=0)
     
-    
+def findFirst(cumsum,rand):
+    for i in range(PARTICLE_NUMBER):
+        if cumsum[i]>=rand:
+            return i
+    return None
     
     
     
