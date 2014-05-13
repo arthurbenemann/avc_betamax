@@ -1,10 +1,15 @@
 import cv2
 import math
 import time
+import numpy
 
 # define image resolution
 img_width = 1280
 img_height = 1024
+focal = 1
+
+#Ball parameters
+realSize = 10
 
 
 class Camera:
@@ -20,13 +25,13 @@ class Camera:
     def transformCameraToWorld(self, circle):
         xPixel = circle[0]
         yPixel = circle[1]
-        size = circle[2]
+        apparentSize = circle[2]
         
         # Calculate measurament variables
         u = 2 * (xPixel / img_width) - 1
-        v = 2 * (yPixel / img_height) - 1
-        pho = 20.0 / size        
-        z = [pho * 1.0 / math.sqrt(1 + u * u), pho * 1.0 / math.sqrt(1 + v * v), pho * u / math.sqrt(1 + u * u)]
+        v = -(2 * (yPixel / img_height) - 1)
+        pho = (realSize / apparentSize) * focal        
+        z = numpy.array([pho * math.sin(math.atan(u/focal)), pho * math.sin(math.atan(v/focal)), pho * math.cos(math.atan((v)/focal))])  # this is wrong, the correct measurament equation should be added
         return z
     
     def getFrame(self):

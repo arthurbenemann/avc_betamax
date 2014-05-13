@@ -32,17 +32,18 @@ def loop():
     z = circleDetection.getWorldCoordForFirstCircle(circles,camera)        
         
     #Filters    
-    kalman.update(z)
-    #particleFilter.update(z)
+    #kalman.update(z)
+    particleFilter.update(z)
     
     #Graphics
     circleDetection.drawCirclesInFrame(circles, frame)
-    frame = cv2.resize(frame, (0,0), fx=0.25, fy=0.25) 
+    #frame = cv2.resize(frame, (0,0), fx=0.25, fy=0.25) 
     cv2.imshow('result', frame)
                   
     #plot.newData(z, kalman)
-    #plot.newParticleFilterData(z,particleFilter)    
-    print(z)
+    plot.newParticleFilterData(z,particleFilter)
+    if not z is None:    
+        print("%+0.3f\t%+0.3f\t%+0.3f" %(z[0],z[1],z[2]))
 
 if __name__ == "__main__":
     main()

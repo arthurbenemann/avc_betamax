@@ -1,13 +1,15 @@
 import numpy
 from timming import timeit
+import scipy.stats
 
-SYSTEM_NOISE = 0.02
-MEASURAMENT_NOISE = 0.01
+SYSTEM_NOISE = 0.01
+MEASURAMENT_NOISE = 0.05
 PARTICLE_NUMBER = 100
 
 class ParticleFilter():
-    pos = numpy.random.random_sample((PARTICLE_NUMBER, 3)) * 10
+    pos = numpy.random.random_sample((PARTICLE_NUMBER, 3))
     weights = numpy.ones(PARTICLE_NUMBER) / PARTICLE_NUMBER  
+    mesuramentPDF = scipy.stats.norm(0,MEASURAMENT_NOISE)
     
     @timeit
     def update(self, z):
@@ -25,9 +27,8 @@ class ParticleFilter():
 
     @timeit
     def reweight(self, z):
-        for i in range(PARTICLE_NUMBER):
-            temp = numpy.hypot(z[0] - self.pos[i, 0], z[1] - self.pos[i, 1])
-            self.weights[i] = (1 / numpy.sqrt(2 * numpy.pi * MEASURAMENT_NOISE)) * numpy.exp(-numpy.power(temp, 2) / (2 * MEASURAMENT_NOISE))
+        temp = numpy.apply_along_axis(numpy.linalg.norm, 1, z - self.pos) # norm of the difference for all particles
+        self.weights = self.mesuramentPDF.pdf(temp)
              
         self.weights = self.weights / self.weights.sum()
     
