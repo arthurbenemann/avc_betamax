@@ -6,10 +6,16 @@ SYSTEM_NOISE = 0.01
 MEASURAMENT_NOISE = 0.05
 PARTICLE_NUMBER = 100
 
+def findFirst(cumsum, rand):
+    for i in range(PARTICLE_NUMBER):
+        if cumsum[i] >= rand:
+            return i
+    return None
+
 class ParticleFilter():
     pos = numpy.random.random_sample((PARTICLE_NUMBER, 3))
     weights = numpy.ones(PARTICLE_NUMBER) / PARTICLE_NUMBER  
-    mesuramentPDF = scipy.stats.norm(0,MEASURAMENT_NOISE)
+    mesuramentPDF = scipy.stats.norm(0, MEASURAMENT_NOISE)
     
     @timeit
     def update(self, z):
@@ -27,7 +33,7 @@ class ParticleFilter():
 
     @timeit
     def reweight(self, z):
-        temp = numpy.apply_along_axis(numpy.linalg.norm, 1, z - self.pos) # norm of the difference for all particles
+        temp = numpy.apply_along_axis(numpy.linalg.norm, 1, z - self.pos)  # norm of the difference for all particles
         self.weights = self.mesuramentPDF.pdf(temp)
              
         weightsSum = self.weights.sum()
@@ -35,25 +41,19 @@ class ParticleFilter():
             self.weights = self.weights / weightsSum
     
     @timeit
-    def resample(self,z):
+    def resample(self, z):
         cumsum = numpy.cumsum(self.weights)
         posCopy = numpy.copy(self.pos)
         for i in range(PARTICLE_NUMBER):
             rand = numpy.random.rand()
-            sample = findFirst(cumsum,rand)
+            sample = findFirst(cumsum, rand)
             if sample is None:
-                self.pos[i, :] = z   # if sample has zero probability resample at measurament point
+                self.pos[i, :] = z  # if sample has zero probability resample at measurament point
             else:
                 self.pos[i, :] = posCopy[sample, :] 
     @timeit            
     def mean(self):
         return numpy.mean(self.pos, axis=0)
-    
-def findFirst(cumsum,rand):
-    for i in range(PARTICLE_NUMBER):
-        if cumsum[i]>=rand:
-            return i
-    return None
     
     
     
