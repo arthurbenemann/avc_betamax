@@ -1,16 +1,14 @@
 import cv2
-import math
-import time
 import numpy
+import time
 
 # define image resolution
 img_width = 1280
 img_height = 1024
-focal = 1
+focal = 0.05
 
 #Ball parameters
-realSize = 10
-
+realSize = 1000
 
 class Camera:
     video_capture = cv2.VideoCapture(-1)
@@ -22,17 +20,15 @@ class Camera:
     start_time = time.time()
     fps = 0
 
-    def transformCameraToWorld(self, circle):
+    def transformNormalizedCamera(self, circle):
         xPixel = circle[0]
         yPixel = circle[1]
         apparentSize = circle[2]
         
         # Calculate measurament variables
         u = 2 * (xPixel / img_width) - 1
-        v = -(2 * (yPixel / img_height) - 1)
-        pho = (realSize / apparentSize) * focal        
-        z = numpy.array([pho * math.sin(math.atan(u/focal)), pho * math.sin(math.atan(v/focal)), pho * math.cos(math.atan((v)/focal))])  # this is wrong, the correct measurament equation should be added
-        return z
+        v = -(2 * (yPixel / img_height) - 1)        
+        return numpy.array([u,v,apparentSize])
     
     def getFrame(self):
         _, frame = self.video_capture.read()
@@ -52,9 +48,3 @@ class Camera:
     
     def release(self):
         self.video_capture.release()
-    
-    
-
-
-    
-

@@ -37,7 +37,7 @@ def loop():
     # frame = cv2.resize(frame, (0,0), fx=0.25, fy=0.25) 
     cv2.imshow('result', frame)
                   
-    plot.newParticleFilterData(z, particleFilter, True)
+    plot.newParticleFilterData(None, particleFilter, True)
 
 if __name__ == "__main__":
     main()

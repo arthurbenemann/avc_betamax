@@ -1,6 +1,7 @@
 from mpl_toolkits.mplot3d.axes3d import Axes3D
 import matplotlib.pyplot as plt
 
+XY_scale = 1
 
 fig = plt.figure("particleFilter")
 plt.show(block=False)
@@ -15,7 +16,7 @@ class Plot:
         plt.clf()
         plt.subplot(311)
         plt.title("ZX")
-        plt.axis([0, 1, -0.3, 0.3])
+        plt.axis([0, 1, -XY_scale, XY_scale])
         if plotCloud:
             plt.scatter(particleFilter.pos[:, 2], particleFilter.pos[:, 0], s=0.1)
         plt.plot(estimate[2], estimate[0], 'bo')
@@ -24,7 +25,7 @@ class Plot:
         
         plt.subplot(312)
         plt.title("ZY")
-        plt.axis([0, 1, -0.3, 0.3])
+        plt.axis([0, 1, -XY_scale, XY_scale])
         if plotCloud:
             plt.scatter(particleFilter.pos[:, 2], particleFilter.pos[:, 1], s=0.1)
         plt.plot(estimate[2], estimate[1], 'bo')
@@ -33,12 +34,15 @@ class Plot:
         
         plt.subplot(313)
         plt.title("XY")
-        plt.axis([-0.3, 0.3, -0.3, 0.3])
+        plt.axis([-XY_scale, XY_scale, -XY_scale, XY_scale])
         if plotCloud:
             plt.scatter(particleFilter.pos[:, 0], particleFilter.pos[:, 1], s=0.1)
         plt.plot(estimate[0], estimate[1], 'bo')
         if z is not None:
             plt.plot(z[0], z[1], 'ro')
+            
+            
+        print("Estimate: \t%+0.3f\t%+0.3f\t%+0.3f" %(estimate[0],estimate[1],estimate[2]))
             
         # plot3D()            
         plt.draw() 

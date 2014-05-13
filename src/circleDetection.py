@@ -47,8 +47,8 @@ def drawCirclesInFrame(circles, frame):
 
 def getWorldCoordForFirstCircle(circles, camera):
     if not (circles is None):
-        z = camera.transformCameraToWorld(circles[0, 0, :])
-        print("%+0.3f\t%+0.3f\t%+0.3f" %(z[0],z[1],z[2]))
+        z = camera.transformNormalizedCamera(circles[0, 0, :])
+        print("Measurament:\t%+0.3f\t%+0.3f\t%+0.3f" %(z[0],z[1],z[2]))
     else:
         z = None
     return z
