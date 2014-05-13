@@ -1,6 +1,6 @@
-from matplotlib.patches import Ellipse
-import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d.axes3d import Axes3D
+import matplotlib.pyplot as plt
+
 
 fig = plt.figure("particleFilter")
 plt.show(block=False)
@@ -8,25 +8,7 @@ plt.hold(True)
 
 
 class Plot:
-    def newData(self, z, kalman):        
-        plt.figure("Kalman ZX")
-        plt.clf()
-        plt.hold(True)
-        plt.plot(kalman.x[0], kalman.x[2], 'bo')
-        if (z is not None):
-            plt.plot(z[0], z[2], 'ro', kalman.x[0], kalman.x[2], 'bo')
-        
-        if (kalman.P.max() <= 1):
-            plt.gca().add_patch(Ellipse(xy=(kalman.x[0], kalman.x[2]), width=kalman.P[0, 0], height=kalman.P[2, 2], edgecolor='b', fc='None', lw=2))
-            
-        plt.axis([0, 2, -1, 1])            
-        plt.draw()
-        plt.show(block=False)
-        
-
-    
-
-    def newParticleFilterData(self, z, particleFilter,plotCloud):
+    def newParticleFilterData(self, z, particleFilter, plotCloud):
         estimate = particleFilter.mean()
         
         plt.figure("particleFilter")
@@ -58,15 +40,14 @@ class Plot:
         if z is not None:
             plt.plot(z[0], z[1], 'ro')
             
-        #plot3D()
-            
+        # plot3D()            
         plt.draw() 
     
     
-    def plot3D(self,particleFilter,z):
+    def plot3D(self, particleFilter, z):
         plt.figure("3D")
         ax = Axes3D(fig)
-        #plt.axis([0, 0.5, -0.3, 0.3])
+        # plt.axis([0, 0.5, -0.3, 0.3])
         # estimate = particleFilter.mean()
         # plt.plot(estimate[0], estimate[2], 'bo')
         ax.set_xlabel('x')
