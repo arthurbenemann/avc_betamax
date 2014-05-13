@@ -41,7 +41,7 @@ def loop():
     cv2.imshow('result', frame)
                   
     #plot.newData(z, kalman)
-    plot.newParticleFilterData(z,particleFilter)
+    plot.newParticleFilterData(z,particleFilter,True)
     if not z is None:    
         print("%+0.3f\t%+0.3f\t%+0.3f" %(z[0],z[1],z[2]))
 

@@ -26,33 +26,35 @@ class Plot:
 
     
 
-    def newParticleFilterData(self, z, particleFilter):
+    def newParticleFilterData(self, z, particleFilter,plotCloud):
+        estimate = particleFilter.mean()
+        
         plt.figure("particleFilter")
         plt.clf()
         plt.subplot(311)
         plt.title("ZX")
         plt.axis([0, 1, -0.3, 0.3])
-        # estimate = particleFilter.mean()
-        # plt.plot(estimate[0], estimate[2], 'bo')
-        plt.scatter(particleFilter.pos[:, 2], particleFilter.pos[:, 0], s=1)
+        if plotCloud:
+            plt.scatter(particleFilter.pos[:, 2], particleFilter.pos[:, 0], s=0.1)
+        plt.plot(estimate[2], estimate[0], 'bo')
         if z is not None:
             plt.plot(z[2], z[0], 'ro') 
         
         plt.subplot(312)
         plt.title("ZY")
         plt.axis([0, 1, -0.3, 0.3])
-        # estimate = particleFilter.mean()
-        # plt.plot(estimate[0], estimate[2], 'bo')
-        plt.scatter(particleFilter.pos[:, 2], particleFilter.pos[:, 1], s=1)
+        if plotCloud:
+            plt.scatter(particleFilter.pos[:, 2], particleFilter.pos[:, 1], s=0.1)
+        plt.plot(estimate[2], estimate[1], 'bo')
         if z is not None:
             plt.plot(z[2], z[1], 'ro') 
         
         plt.subplot(313)
         plt.title("XY")
         plt.axis([-0.3, 0.3, -0.3, 0.3])
-        # estimate = particleFilter.mean()
-        # plt.plot(estimate[0], estimate[2], 'bo')
-        plt.scatter(particleFilter.pos[:, 0], particleFilter.pos[:, 1], s=1)
+        if plotCloud:
+            plt.scatter(particleFilter.pos[:, 0], particleFilter.pos[:, 1], s=0.1)
+        plt.plot(estimate[0], estimate[1], 'bo')
         if z is not None:
             plt.plot(z[0], z[1], 'ro')
             
