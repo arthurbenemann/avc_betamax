@@ -4,7 +4,7 @@ import time
 
 # define image resolution
 img_width = 1280
-img_height = 1024
+img_height = 720
 focal = 0.05
 
 #Ball parameters

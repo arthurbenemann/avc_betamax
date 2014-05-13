@@ -4,9 +4,9 @@ import scipy.stats
 import camera
 import math
 
-SYSTEM_NOISE = 0.1
-MEASURAMENT_NOISE = 1
-PARTICLE_NUMBER = 1000
+SYSTEM_NOISE = 0.05
+MEASURAMENT_NOISE = 0.1
+PARTICLE_NUMBER = 100
 
 def findFirst(cumsum, rand):
     for i in range(PARTICLE_NUMBER):
@@ -40,7 +40,7 @@ class ParticleFilter():
             x = self.pos[i,0]
             y = self.pos[i,1]
             z = self.pos[i,2]
-            self.projected[i,:] = camera.focal*numpy.array([x/z,y/z,camera.realSize/math.sqrt(x*x+y*y+x*x)])   
+            self.projected[i,:] = camera.focal*numpy.array([x/z,y/z,camera.realSize/math.sqrt(x*x+y*y+z*z)])   
         
         temp = numpy.apply_along_axis(numpy.linalg.norm, 1, measurament - self.projected)  # norm of the difference for all particles
         self.weights = self.mesuramentPDF.pdf(temp)
