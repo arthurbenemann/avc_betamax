@@ -3,12 +3,17 @@ import math
 import time
 
 # define image resolution
-img_width = 640
-img_height = 480
+img_width = 1280
+img_height = 1024
 
 
 class Camera:
-    video_capture = cv2.VideoCapture(0)
+    video_capture = cv2.VideoCapture(-1)
+    
+    video_capture.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH, img_width)
+    video_capture.set(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT, img_height)
+    print(str(video_capture.get(cv2.cv.CV_CAP_PROP_FRAME_WIDTH))+"x"+str(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT))
+    
     start_time = time.time()
     fps = 0
 

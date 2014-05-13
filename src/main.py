@@ -37,10 +37,11 @@ def loop():
     
     #Graphics
     circleDetection.drawCirclesInFrame(circles, frame)
+    #frame = cv2.resize(frame, (0,0), fx=0.25, fy=0.25) 
     cv2.imshow('result', frame)
                   
     plot.newData(z, kalman)
-    plot.newParticleFilterData(z,particleFilter)    
+    #plot.newParticleFilterData(z,particleFilter)    
     
 
 if __name__ == "__main__":
